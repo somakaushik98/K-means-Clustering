@@ -208,6 +208,12 @@
       <li>Then we incorporated start and stop buttons to control the K-means visualization, enhancing user engagement.</li>
     </ul>
 	<h4>What will be the most challenging of your project to design and why?</h4>
+  <ul>
+    <li>Firstly, the algorithm itself is complex, involving steps such as centroid initialization, data point assignment, and centroid updating, all of which need to be translated into efficient JavaScript code.</li>
+    <li>Secondly, JavaScript's limitations in handling data and performing mathematical operations on large datasets add another layer of complexity, requiring careful optimization of the algorithm.</li>
+    <li>Additionally, integrating the algorithm with interactive visualization frameworks like D3.js and Svelte requires meticulous coordination to ensure smooth data flow and real-time updates</li>
+    <li>Moreover, JavaScript's performance and numerical precision may not match those of other languages like Python, commonly used for such tasks, posing further challenges in ensuring accuracy and efficiency.</li>
+  </ul>
   </div>
   </div>
   

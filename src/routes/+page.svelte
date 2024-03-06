@@ -1,14 +1,16 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
 	import * as d3 from 'd3';
-  
+  import Scatterplot from './Scatterplot.svelte';
+  import { kMeans } from './kMeans.js';
+
 	let numClusters = 4;
 	let svg;
 	//let interval;
 	let points = [];
 	let centroids = [];
 	let interval = null;
-  
+  let elt;
 	const margin = { top: 10, right: 60, bottom: 40, left: 50 };
 	const viewBox = { x: 0, y: 0, w: 1000, h: 604 };
 	const width = viewBox.w - margin.left - margin.right;
@@ -185,6 +187,10 @@
 	onDestroy(() => {
 	  stop();
 	});
+
+  onMount(() => {
+    kMeans(elt, 500, 500, 1000, 5, 10);
+  });
   </script>
   
   <div class="container">
@@ -200,21 +206,55 @@
 	</div>
 	
   <div class="text-content">
-    <h4>What have you done so far?</h4>
-    <ul>
-      <li>We prepared the dataset according to the requirements, initially creating a static visualization of the K-means algorithm.</li>
-      <li>We enhanced interactivity by visualizing how centroids move to ideal locations, demonstrating the clustering process of the K-means algorithm.</li>
-      <li>Subsequently, we introduced a feature allowing users to select the number of clusters, which dynamically changes the colors of points on the coordinate plane to represent different clusters.</li>
-      <li>Then we incorporated start and stop buttons to control the K-means visualization, enhancing user engagement.</li>
-    </ul>
-	<h4>What will be the most challenging of your project to design and why?</h4>
-  <ul>
-    <li>Firstly, the algorithm itself is complex, involving steps such as centroid initialization, data point assignment, and centroid updating, all of which need to be translated into efficient JavaScript code.</li>
-    <li>Secondly, JavaScript's limitations in handling data and performing mathematical operations on large datasets add another layer of complexity, requiring careful optimization of the algorithm.</li>
-    <li>Additionally, integrating the algorithm with interactive visualization frameworks like D3.js and Svelte requires meticulous coordination to ensure smooth data flow and real-time updates</li>
-    <li>Moreover, JavaScript's performance and numerical precision may not match those of other languages like Python, commonly used for such tasks, posing further challenges in ensuring accuracy and efficiency.</li>
-  </ul>
+    <div class="intro-container">
+      <img src="1588153086249.png" alt="Your Image">
+    <div class="intro">
+      <center><h4>About</h4></center>
+    <p>
+      K-means clustering is a popular unsupervised machine learning algorithm used for partitioning a dataset into distinct clusters. The goal of K-means is to group data points into K clusters, where each cluster is represented by its centroid. It iteratively assigns data points to the nearest centroid based on a distance metric, typically Euclidean distance, and then updates the centroids to the mean of the data points assigned to each cluster. This process continues until the centroids no longer change significantly, indicating convergence. K-means is widely utilized in various fields such as image segmentation, customer segmentation, and anomaly detection, offering a straightforward yet effective approach to discover patterns and structure within data. However, its performance can be sensitive to the initial choice of centroids and is limited by its assumption of spherical clusters and equal variance within clusters.</p> 
+    </div>
+    </div>
+    <div class="highlight-box">
+      <h2>Implementation</h2>
+    </div>
+    <div class="intro-container">
+      <Scatterplot />
+    <div class="box">
+      <h4>Dataset Preparation</h4>
+      <p> Firstly import the dataset and ensuring its proper formatting, it's imperative to conduct exploratory data analysis to comprehend the distribution and characteristics of the variables. This involves checking for missing values and addressing them appropriately, along with selecting relevant features such as "Annual Income" and "Spending Score"  in our dataset. Further steps may include normalization or standardization of features to ensure equitable contribution to the clustering process. Once preprocessed, the dataset serves as input for the K-means clustering algorithm, facilitating the identification of distinct customer segments based on their annual income and spending scores, ultimately enabling targeted marketing strategies and enhanced customer understanding.</p>
+    </div>
   </div>
+  <div class="intro-container">
+  <div class="box">
+    <h4>Model Training</h4>
+    <ul>
+      <li>Randomly select K data points from the dataset as initial centroid positions, ensuring they represent a diverse spread across the feature space.</li>
+      <li>Calculate the distance between each data point and each centroid using a distance metric such as Euclidean distance, Manhattan distance, or cosine similarity.</li>
+      <li>Assign each data point to the cluster with the nearest centroid based on the calculated distances, effectively grouping data points together based on similarity.</li>
+      <li>Update the centroids by recalculating their positions as the mean of all data points assigned to each cluster, ensuring they accurately represent the cluster's center.</li>
+      <li>Repeat steps 2-4 iteratively until convergence, which occurs when the centroids stabilize and no longer change significantly between iterations, or when a predefined maximum number of iterations is reached to prevent infinite looping.</li>
+    </ul>
+    <center>
+    <div bind:this={elt} class="kmeans-chart"></div></center>
+  </div>
+</div>
+<div class="intro-container">
+  <div class="box">
+    <h4>Model Evaluation</h4>
+    <p>
+      Evaluating a K-means clustering model involves assessing its performance in effectively partitioning data points into clusters. Common methods include:</p>
+    <ul>
+      <li><b>Silhouette Analysis:</b> Silhouette analysis measures how similar each data point is to its assigned cluster compared to other clusters, with scores ranging from -1 to 1, where higher scores indicate better clustering.</li>
+      <li><b>Elbow Method:</b> The elbow method involves plotting the within-cluster sum of squares (WCSS) for different cluster numbers and identifies the "elbow" point, suggesting the optimal number of clusters.</li>
+      <li><b>Davies–Bouldin Index:</b> The Davies–Bouldin index computes the average similarity between clusters, considering both compactness and separation, where lower values indicate better clustering quality.</li>
+      <li><b>Dunn Index:</b> The Dunn index measures the ratio of inter-cluster distance to intra-cluster distance, where higher values signify better clustering with larger inter-cluster separation and smaller cluster sizes.</li>
+      <li><b>External Validation Measures:</b> External validation measures like the adjusted Rand index and Fowlkes-Mallows index compare clustering results to true labels when available, with higher scores indicating better agreement between the clustering and ground truth labels.</li>
+    </ul>
+  </div>
+</div>
+    </div>
+
+  
   </div>
   
   <style>
@@ -301,13 +341,48 @@
     padding: 15px;
     text-align: left;
     max-width: 800px;
-    margin-left: auto;
+    margin-left: revert;
     margin-right: auto;
   }
 
   .text-content h2 {
     text-align: center;
     margin-bottom: 15px;
+  }
+
+  .highlight-box {
+    width: 1000px; /* Set box width */
+    padding: 20px;
+    background-color: #ffffff; /* Change background color of the box */
+    border-radius: 10px; /* Add rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+    box-sizing: border-box; /* Include padding and border in the box's total width and height */
+    margin-bottom: 20px; /* Add space between boxes */
+    border: 2px;
+  }
+
+  .intro-container {
+    width: 1000px; /* Adjust maximum width of the container */
+    margin: 50px auto; /* Center the container horizontally */
+    padding: 20px;
+    background-color: #ffffff; /* Change background color of the container */
+    border-radius: 10px; /* Add rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+    display: flex; /* Use flexbox for layout */
+    align-items: center; 
+    
+    /* Align items vertically */
+  }
+
+  .intro-container img {
+    max-width: 200px; /* Adjust maximum width of the image */
+    margin-right: 20px; /* Add space between the image and paragraph */
+  }
+
+  .intro {
+    flex: 1; /* Fill remaining space */
+    line-height: 1.6; /* Adjust line height for better readability */
+    text-align: justify; /* Justify text */
   }
 
   .text-content ul {
@@ -319,5 +394,55 @@
     margin-bottom: 10px;
     line-height: 1.6; /* Improved readability for list items */
   }
+
+  .box {
+    width: 1000px; /* Set box width */
+    margin-top: 20px; /* Add space between boxes */
+    padding: 20px;
+    background-color: #ffffff; /* Change background color of the box */
+    border-radius: 10px; /* Add rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+    box-sizing: border-box; /* Include padding and border in the box's total width and height */
+  }
+
+
+  .text-left {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Align items vertically */
+  }
+
+  .text-left .text {
+    flex: 1; /* Fill remaining space */
+    line-height: 1.6; /* Adjust line height for better readability */
+    text-align: justify; /* Justify text */
+  }
+
+  .text-left img {
+    max-width: 200px; /* Adjust maximum width of the image */
+    margin-right: 20px; /* Add space between the image and text */
+  }
+
+  .kmeans-chart {
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-size: 9px;
+    fill: #ccc;
+}
+
+.kmeans-chart .centroid {
+    stroke: #000;
+    stroke-width: 2px;
+}
+
+.kmeans-chart text.label {
+    font-size: 12px;
+    fill: #333;
+}
+
+.kmeans-chart .axis line, .axis path {
+    fill: none;
+    stroke-width: 1px;
+    stroke: #ccc;
+    shape-rendering: crispEdges;
+}
   </style>
   

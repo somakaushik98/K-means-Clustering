@@ -41,6 +41,15 @@
 		return [];
 	  }
 	}
+
+  function showTooltip(event, point) {
+    // Show tooltip
+    console.log(`x: ${point.x}, y: ${point.y}`);
+  }
+
+  function hideTooltip() {
+    // Hide tooltip
+  }
   
 	function getRandomPoint() {
 	  return {
@@ -164,7 +173,24 @@
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Axes with white color
+      svg.append("text")
+      .attr("class", "x-axis-label")
+      .attr("x", width / 2)
+      .attr("y", height + margin.top + 25)
+      .style("text-anchor", "middle")
+      .text("Annual Income (k$)");
+
+    // Append y axis label
+    svg.append("text")
+      .attr("class", "y-axis-label")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -height / 2)
+      .attr("y", -margin.left)
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Spending Score (1-100)");
+    
+      // Axes with white color
     svg.append("g")
       .attr("transform", `translate(0, ${height})`)
       .call(d3.axisBottom(x))
@@ -182,6 +208,7 @@
     svg.selectAll("text").style("fill", "black").style("font-size", "15px");
 
     await reset();
+
   });
   
 	onDestroy(() => {
@@ -196,18 +223,19 @@
   <div class="container">
 	<nav class="shiny-navbar"> K Means Clustering </nav>
 	<div id="chart-container">
-	  <div id="container"></div>
+	  <div id="container">
+    </div>
 	</div>
 	<div class="controls">
 	  <label for="numClusters">Number of Clusters:</label>
 	  <input id="numClusters" type="number" bind:value={numClusters} min="1" class="cluster-input">
 	  <button on:click={interval ? stop : start}>{interval ? 'Stop' : 'Start'}</button>
-	  <button on:click={reset}>Restart</button>
+	  <button on:click={reset}>Reset</button>
 	</div>
 	
   <div class="text-content">
     <div class="intro-container">
-      <img src="1588153086249.png" alt="Your Image">
+      <img src="1588153086249.png" alt="Your Image" width="200" height="200">
     <div class="intro">
       <center><h4>About</h4></center>
     <p>
@@ -250,11 +278,54 @@
       <li><b>Dunn Index:</b> The Dunn index measures the ratio of inter-cluster distance to intra-cluster distance, where higher values signify better clustering with larger inter-cluster separation and smaller cluster sizes.</li>
       <li><b>External Validation Measures:</b> External validation measures like the adjusted Rand index and Fowlkes-Mallows index compare clustering results to true labels when available, with higher scores indicating better agreement between the clustering and ground truth labels.</li>
     </ul>
+    <center>
+    <img src="sphx_glr_plot_kmeans_silhouette_analysis_002.png" alt="Image8" width="1000" height="300">
+  </center>
   </div>
-</div>
-    </div>
-
   
+</div>
+
+    </div>
+    <div class="highlight-box">
+      <center><h2>Applications</h2></center>
+    </div>
+    <div class="intro-container">
+      <div class="box">
+        <ul>
+          <li><b>Customer Segmentation:</b> K-means clustering is employed to segment customers based on their purchasing behavior, demographic information, or other relevant features, facilitating tailored marketing strategies and offerings for specific customer segments.</li>
+          <li><b>Image Segmentation:</b> In image processing, K-means clustering is utilized to segment an image into distinct regions based on pixel similarity, thereby aiding tasks such as object recognition, image compression, and enhancement.</li>
+          <li><b>Anomaly Detection:</b> K-means clustering serves as a tool for identifying outliers or anomalies in datasets by clustering the data and singling out clusters with significantly fewer data points, thus detecting data points that do not fit into any cluster or belong to clusters with very few members.</li>
+          <li><b>Text Clustering:</b> Within text mining and natural language processing, K-means clustering is applied to cluster documents based on their content, facilitating tasks such as document organization, topic modeling, and summarization.</li>
+          <li><b>Recommendation Systems:</b> In recommendation systems, K-means clustering is utilized to group similar items or users based on their features or preferences, enabling personalized recommendations by suggesting items popular among similar users or items similar to those previously interacted with.</li>
+        </ul>
+        <div class="image-container">
+          <div class="image-wrapper">
+        <img src="1_8GEXSMN6FyVNBWNBXVAA7A.png" alt="Image1" width="600" height="300">
+        <div class="caption">Image Segmentation</div>
+        </div>
+        <div class="image-wrapper">
+        <img src="image-5.png" alt="Image2" width="800" height="300">
+        <div class="caption">Text Clustering</div>
+      </div>
+      
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box">
+      <center><h2>Limitations</h2></center>
+    </div>
+    <div class="intro-container">
+    <div class="box">
+      <ul>
+        <li><b>Sensitive to Initial Centroids:</b> K-means clustering is sensitive to the initial placement of cluster centroids. Different initializations can lead to different cluster assignments, affecting the quality and stability of the clustering solution.</li>
+        <li><b>Sensitive to Outliers:</b> Outliers or noise in the dataset can significantly impact the clustering results. Since K-means aims to minimize the within-cluster variance, outliers can distort cluster boundaries and lead to incorrect cluster assignments</li>
+        <li><b>May Converge to Local Optima:</b> K-means is prone to converging to local optima, especially in high-dimensional spaces or when dealing with complex data distributions. Multiple runs with different initializations are often required to mitigate this issue.</li>
+        <li><b>Not Suitable for Categorical Data:</b> K-means is designed for numerical data and cannot directly handle categorical variables. Preprocessing techniques such as one-hot encoding may be required for datasets containing categorical features.</li>
+        <li><b>Sensitive to Scaling and Features:</b> K-means clustering is sensitive to the scale and distribution of features. Features with larger scales or variances can dominate the clustering process, leading to biased cluster assignments.</li>
+      </ul>
+    </div>
+  </div>
+    
   </div>
   
   <style>
@@ -375,7 +446,7 @@
   }
 
   .intro-container img {
-    max-width: 200px; /* Adjust maximum width of the image */
+    max-width: 800px; /* Adjust maximum width of the image */
     margin-right: 20px; /* Add space between the image and paragraph */
   }
 
@@ -443,6 +514,40 @@
     stroke-width: 1px;
     stroke: #ccc;
     shape-rendering: crispEdges;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+}
+
+.image-container figure {
+    text-align: center; /* Center caption text */
+    margin: 0 10px; /* Adjust margin as needed */
+}
+
+.image-container img {
+    width: 900px; /* Increase the width to make images larger */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.image-container figcaption {
+    margin-top: 10px; /* Adjust margin as needed */
+}
+.image-wrapper {
+    text-align: center;
+    margin: 0 10px; /* Adjust margin as needed */
+}
+
+.image-wrapper img {
+    width: 80%; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+.caption {
+    margin-top: 5px; /* Adjust margin as needed */
+    font-size: 14px; /* Adjust font size as needed */
+    color: #888; /* Adjust color as needed */
 }
   </style>
   

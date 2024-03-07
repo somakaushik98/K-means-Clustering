@@ -84,8 +84,31 @@
                                             .attr("cx", d => x(d.x))
                                             .attr("cy", d => y(d.y))
                                             .style("fill", d => color(d.cluster))),
-      exit => exit.remove()
-    );
+      exit => exit.remove())
+    .on("mouseover", function(event, d) {
+      const colorHex = color(d.cluster); 
+    d3.select(this)
+      .transition()
+      .duration(200) // Quick transition duration for responsiveness
+      .attr("r", 8); // Increase radius size on hover
+    
+    d3.select("#tooltip")
+      .style("opacity", 1)
+      .html(`Annual Income (k$):${d.x}<br/>Spending Score (1-100):${d.y}<br/>Cluster Color: <span style='color:${colorHex};'>●</span>`)// Customize tooltip content
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 10) + "px");
+      
+  })
+  .on("mouseout", function() {
+    d3.select(this)
+      .transition()
+      .duration(200) // Return to normal size smoothly
+      .attr("r", 4); // Return to normal radius size
+
+    d3.select("#tooltip").style("opacity", 0); 
+     // Hide tooltip on mouse out
+      });
+
 
   // Make sure to remove any previous centroids before drawing new ones
   svg.selectAll(".centroid").remove();
@@ -105,9 +128,35 @@
                      .call(enter => enter.transition().duration(500)),
       update => update.call(update => update.transition().duration(500)
                                             .attr("cx", d => x(d.x))
-                                            .attr("cy", d => y(d.y))),
-      exit => exit.remove()
-    );
+                                            .attr("cy", d => y(d.y))
+                                            .style("fill", d => color(d.cluster))),
+      exit => exit.remove())
+    .attr("class", "centroid")
+    .on("mouseover", function(event, d,i) {
+      const colorHex1 = color(i);
+    // Enlarge the centroid on hover
+    d3.select(this)
+      .transition()
+      .duration(150) // Duration of the enlarging animation
+      .attr("r", 10); // New, larger radius for the centroid circle
+
+    // Show tooltip (if you're using a tooltip)
+    d3.select("#tooltip")
+      .style("opacity", 1)
+      .html(`Cluster Centroid<br/>Annual Income (k$): ${d.x.toFixed(2)}<br/>Spending Score (1-100): ${d.y.toFixed(2)}`) // Customize tooltip content for centroids
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY + 10) + "px");
+  })
+  .on("mouseout", function(d) {
+    // Revert the centroid to its original size
+    d3.select(this)
+      .transition()
+      .duration(150) // Duration of the shrinking animation
+      .attr("r", 6); // Original radius of the centroid circle
+
+    // Hide tooltip
+    d3.select("#tooltip").style("opacity", 0);// Hide tooltip on mouse out
+    });
 }
 
   
@@ -172,6 +221,14 @@
       .style("background", "#D3D3D3") // Set to light gray
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
+     
+    svg.append("text")
+    .attr("x", width / 2) // Center the title by setting x to half the width
+    .attr("y", 8 - (margin.top / 2)) // Position y above the top margin
+    .attr("text-anchor", "middle") // Ensure the text is centered at its x position
+    .style("font-size", "24px") // Set the font size
+    .style("font-family", "Arial, sans-serif") // Set the font family
+    .text("K Means Clustering Visualization"); 
 
       svg.append("text")
       .attr("class", "x-axis-label")
@@ -222,16 +279,7 @@
   
   <div class="container">
 	<nav class="shiny-navbar"> K Means Clustering </nav>
-	<div id="chart-container">
-	  <div id="container">
-    </div>
-	</div>
-	<div class="controls">
-	  <label for="numClusters">Number of Clusters:</label>
-	  <input id="numClusters" type="number" bind:value={numClusters} min="1" class="cluster-input">
-	  <button on:click={interval ? stop : start}>{interval ? 'Stop' : 'Start'}</button>
-	  <button on:click={reset}>Reset</button>
-	</div>
+	
 	
   <div class="text-content">
     <div class="intro-container">
@@ -242,6 +290,21 @@
       K-means clustering is a popular unsupervised machine learning algorithm used for partitioning a dataset into distinct clusters. The goal of K-means is to group data points into K clusters, where each cluster is represented by its centroid. It iteratively assigns data points to the nearest centroid based on a distance metric, typically Euclidean distance, and then updates the centroids to the mean of the data points assigned to each cluster. This process continues until the centroids no longer change significantly, indicating convergence. K-means is widely utilized in various fields such as image segmentation, customer segmentation, and anomaly detection, offering a straightforward yet effective approach to discover patterns and structure within data. However, its performance can be sensitive to the initial choice of centroids and is limited by its assumption of spherical clusters and equal variance within clusters.</p> 
     </div>
     </div>
+  </div>
+  
+  <div id="chart-container">
+	  <div id="container">
+    </div>
+	</div>
+	<div class="controls">
+    <div id="tooltip" class="tooltip" style="opacity: 0"></div>
+	  <label for="numClusters">Number of Clusters:</label>
+	  <input id="numClusters" type="number" bind:value={numClusters} min="1" max="6" class="cluster-input" style="width: 300px;">
+	  <button on:click={interval ? stop : start}>{interval ? 'Stop' : 'Start'}</button>
+	  <button on:click={reset}>Reset</button>
+	</div>
+
+    <div class="text-content">
     <div class="highlight-box">
       <h2>Implementation</h2>
     </div>
@@ -266,6 +329,10 @@
     <div bind:this={elt} class="kmeans-chart"></div></center>
   </div>
 </div>
+
+
+
+
 <div class="intro-container">
   <div class="box">
     <h4>Model Evaluation</h4>
@@ -307,10 +374,9 @@
         <img src="image-5.png" alt="Image2" width="800" height="300">
         <div class="caption">Text Clustering</div>
       </div>
-      
+      </div>
         </div>
       </div>
-    </div>
     <div class="highlight-box">
       <center><h2>Limitations</h2></center>
     </div>
@@ -324,9 +390,9 @@
         <li><b>Sensitive to Scaling and Features:</b> K-means clustering is sensitive to the scale and distribution of features. Features with larger scales or variances can dominate the clustering process, leading to biased cluster assignments.</li>
       </ul>
     </div>
+    </div>
   </div>
     
-  </div>
   
   <style>
 
@@ -364,6 +430,7 @@
     align-content: flex-end;
     align-items: baseline;
 	height: 50px;
+  padding-top: inherit;
   }
 
   .cluster-input, button {
@@ -549,5 +616,20 @@
     font-size: 14px; /* Adjust font size as needed */
     color: #888; /* Adjust color as needed */
 }
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    width: auto;
+    height: auto;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: white;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
   </style>
   

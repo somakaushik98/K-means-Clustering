@@ -64,7 +64,7 @@
         .text("Spending Score (1-100)");
 
       // Add dots
-      const circles = svg.selectAll("dot")
+      svg.selectAll("dot")
         .data(jsonData)
         .enter()
         .append("circle")
@@ -74,15 +74,7 @@
           .style("fill", "#69b3a2")
         .transition() // Add transition to circles
           .duration(2000)
-          .attr("cx", d => x(d['Annual Income (k$)'])) // Final x position based on annual income
-        .on("end", function repeat() {
-          d3.active(this)
-            .attr("cx", 0)
-            .transition()
-            .duration(2000)
-            .attr("cx", d => x(d['Annual Income (k$)']))
-            .on("end", repeat);
-        });
+          .attr("cx", d => x(d['Annual Income (k$)'])); // Final x position based on annual income
 
     } catch (error) {
       console.error('Error:', error);

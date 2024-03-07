@@ -25,10 +25,10 @@ export function kMeans(elt, w, h, numPoints, numClusters, maxIter) {
     svg.append("g")
         .append("text")
         .attr("class", "label")
-        .attr("transform", "translate(" + (width - margin.left - margin.right) + 
-            "," + (height + margin.top + margin.bottom) + ")")
-        .style("font-size", "20px") // Increase font size
+        .attr("transform", "translate(" + (width / 2) + "," + (height + margin.top + margin.bottom - 4) + ")") // Adjusted transformation
+        .style("font-size", "12px") // Increase font size
         .style("fill", "black")     // Set text color to black
+        .style("text-anchor", "middle") // Align text in the middle horizontally
         .text("");
 
     /**
@@ -143,7 +143,7 @@ export function kMeans(elt, w, h, numPoints, numClusters, maxIter) {
             .attr("r", 5);
             
         // Update old elements as needed
-        circle.transition().delay(100).duration(1000)
+        circle.transition().duration(1000)
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; })
             .style("fill", function(d) { return d.fill; })
@@ -170,7 +170,7 @@ export function kMeans(elt, w, h, numPoints, numClusters, maxIter) {
     function iterate() {
         
         // Update label
-        setText("Iteration " + iter + " of " + maxIter);
+        setText("Model Training: Iteration " + iter + " of " + maxIter);
 
         // Colorize the points
         colorizePoints();

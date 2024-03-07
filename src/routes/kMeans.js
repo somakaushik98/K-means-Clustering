@@ -27,6 +27,8 @@ export function kMeans(elt, w, h, numPoints, numClusters, maxIter) {
         .attr("class", "label")
         .attr("transform", "translate(" + (width - margin.left - margin.right) + 
             "," + (height + margin.top + margin.bottom) + ")")
+        .style("font-size", "20px") // Increase font size
+        .style("fill", "black")     // Set text color to black
         .text("");
 
     /**

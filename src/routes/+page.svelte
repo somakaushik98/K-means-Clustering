@@ -288,7 +288,7 @@
   function handleInput() {
     setTimeout(() => {
       showInstructions = false;
-    }, 4000); // Delay in milliseconds (e.g., 2000 milliseconds = 2 seconds)
+    }, 5000); // Delay in milliseconds (e.g., 2000 milliseconds = 2 seconds)
   }
 
   let hasStarted = false; // Tracks if the Start button has been clicked at least once
@@ -684,7 +684,7 @@
 
   .instruction-box {
     display: none;
-    background-color: lightcoral;
+    background-color: lightyellow;
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;

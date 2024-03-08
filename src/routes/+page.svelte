@@ -338,8 +338,18 @@
 	<div class="controls">
     <div id="tooltip" class="tooltip" style="opacity: 0"></div>
 	  <label for="numClusters">Number of Clusters:</label>
-	  <input id="numClusters" type="number" bind:value={numClusters} min="1" max="6" class="cluster-input" style="width: 300px;" on:focus={handleFocus} on:input={handleInput} on:click={handleInput} placeholder="Enter number of clusters...">
-    {#if showInstructions}
+	  <!-- <input id="numClusters" type="number" bind:value={numClusters} min="1" max="6" class="cluster-input" style="width: 300px;" on:focus={handleFocus} on:input={handleInput} on:click={handleInput} placeholder="Enter number of clusters...">-->
+    <select id="numClusters" bind:value={numClusters} class="cluster-input" style="width: 300px;" on:focus={handleFocus} on:input={handleInput} on:click={handleInput} placeholder="Enter number of clusters...">
+      <option value="" disabled selected>Please select number of clusters...</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+    </select>    
+    
+    {#if showInstructions} 
 <div class="instruction-box show">
   Reset the Cluster by clicking 'Reset' before clicking 'Start' after you change the value, and then click 'Start'
 </div>

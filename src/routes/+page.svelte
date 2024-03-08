@@ -189,7 +189,7 @@
         updateCentroids();
         updatePoints();
         updateVisualization();
-      }, 1000);
+      }, 2000);
     }
 	}
   
@@ -288,7 +288,7 @@
   function handleInput() {
     setTimeout(() => {
       showInstructions = false;
-    }, 5000); // Delay in milliseconds (e.g., 2000 milliseconds = 2 seconds)
+    }, 3000); // Delay in milliseconds (e.g., 2000 milliseconds = 2 seconds)
   }
 
   let hasStarted = false; // Tracks if the Start button has been clicked at least once

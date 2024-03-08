@@ -11,6 +11,7 @@
 	let centroids = [];
 	let interval = null;
   let elt;
+  //let hasFocused = false;
 	const margin = { top: 10, right: 60, bottom: 40, left: 50 };
 	const viewBox = { x: 0, y: 0, w: 1000, h: 604 };
 	const width = viewBox.w - margin.left - margin.right;
@@ -273,8 +274,46 @@
 	});
 
   onMount(() => {
-    kMeans(elt, 500, 500, 1000, 5, 10);
+    kMeans(elt, 500, 500, 1000, 5, 15);
   });
+  let showInstructions = false; // Initially, don't show instructions
+  let hasBeenFocused = false;
+  function handleFocus() {
+    if (!hasBeenFocused) {
+      showInstructions = true; // Show instructions on first focus
+      hasBeenFocused = true; // Mark as focused
+    }
+  }
+
+  function handleInput() {
+    setTimeout(() => {
+      showInstructions = false;
+    }, 4000); // Delay in milliseconds (e.g., 2000 milliseconds = 2 seconds)
+  }
+
+  let hasStarted = false; // Tracks if the Start button has been clicked at least once
+  let showStartInstructions = false;
+
+  function startClicked() {
+    if (!hasStarted) {
+      showStartInstructions = true; // Show instructions on first click
+      hasStarted = true; // Prevent future instructions from showing
+
+      // Hide instructions after a delay
+      setTimeout(() => {
+        showStartInstructions = false;
+      }, 2000); // 2000 milliseconds = 2 seconds
+    }
+  }
+
+  function handleClick() {
+  if (interval) {
+    stop();
+  } else {
+    start();
+  }
+  startClicked();
+}
   </script>
   
   <div class="container">
@@ -299,10 +338,21 @@
 	<div class="controls">
     <div id="tooltip" class="tooltip" style="opacity: 0"></div>
 	  <label for="numClusters">Number of Clusters:</label>
-	  <input id="numClusters" type="number" bind:value={numClusters} min="1" max="6" class="cluster-input" style="width: 300px;">
-	  <button on:click={interval ? stop : start}>{interval ? 'Stop' : 'Start'}</button>
+	  <input id="numClusters" type="number" bind:value={numClusters} min="1" max="6" class="cluster-input" style="width: 300px;" on:focus={handleFocus} on:input={handleInput} on:click={handleInput} placeholder="Enter number of clusters...">
+    {#if showInstructions}
+<div class="instruction-box show">
+  Reset the Cluster by clicking 'Reset' before clicking 'Start' after you change the value, and then click 'Start'
+</div>
+{/if}
+    <button on:click={handleClick} >{interval ? 'Stop' : 'Start'}</button>
+    {#if showStartInstructions}
+<div class="instruction-box show">
+  Hover the mouse over the points to view the tooltip
+</div>
+{/if}
 	  <button on:click={reset}>Reset</button>
 	</div>
+ 
 
     <div class="text-content">
     <div class="highlight-box">
@@ -326,7 +376,7 @@
       <li>Repeat steps 2-4 iteratively until convergence, which occurs when the centroids stabilize and no longer change significantly between iterations, or when a predefined maximum number of iterations is reached to prevent infinite looping.</li>
     </ul>
     <center>
-    <div bind:this={elt} class="kmeans-chart"></div></center>
+     <div bind:this={elt} class="kmeans-chart"></div></center>
   </div>
 </div>
 
@@ -630,6 +680,24 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s;
+  }
+
+  .instruction-box {
+    display: none;
+    background-color: lightcoral;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    position: absolute;
+    width: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    margin-top: 10px; /* Adjust spacing as needed */
+  }
+
+  .instruction-box.show {
+    display: block; /* Only show when .show is added */
   }
   </style>
   

@@ -16,7 +16,7 @@ Our interactive article provides an engaging way to understand how K-Means clust
 
 ## How to Use
 
-To explore our interactive article on K-Means clustering, simply visit the hosted website on GitHub Pages: [(https://your-github-username.github.io/k-means-clustering)](https://somakaushik98.github.io/K-means-Clustering/).
+To explore our interactive article on K-Means clustering, simply visit the hosted website on GitHub Pages: [https://your-github-username.github.io/k-means-clustering](https://somakaushik98.github.io/K-means-Clustering/).
 
 Once on the website, users can interact with the visualization to see the K-Means algorithm in action. They can adjust parameters and explore different datasets to gain insights into how the algorithm partitions the data.
 

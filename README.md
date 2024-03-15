@@ -1,4 +1,11 @@
-# K-Means Clustering Readme
+# DSC106 - Introduction to Data Visualization
+
+# Contributers:
+
+Sai Kaushik Soma
+Venkata Harsha Vardhan Gangala
+
+# K-Means Clustering
 
 Welcome to our interactive article on K-Means clustering! In this article, we explore the concept of K-Means clustering, a popular unsupervised machine learning algorithm used for clustering data points into groups based on similarities.
 

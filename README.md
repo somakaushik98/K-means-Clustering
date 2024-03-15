@@ -29,7 +29,7 @@ We would like to thank the creators of Svelte and D3.js for providing the tools 
 
 Thank you for exploring K-Means clustering with us! We hope you find our interactive article informative and engaging.
 
-# Contributers:
+### Contributers:
 
 Sai Kaushik Soma (A59020013)<br>
 Venkata Harsha Vardhan Gangala (A59019872)

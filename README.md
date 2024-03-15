@@ -1,10 +1,5 @@
 # DSC106 - Introduction to Data Visualization
 
-# Contributers:
-
-Sai Kaushik Soma (A59020013)<br>
-Venkata Harsha Vardhan Gangala (A59019872)
-
 # K-Means Clustering
 
 Welcome to our interactive article on K-Means clustering! In this article, we explore the concept of K-Means clustering, a popular unsupervised machine learning algorithm used for clustering data points into groups based on similarities.
@@ -33,3 +28,8 @@ Once on the website, users can interact with the visualization to see the K-Mean
 We would like to thank the creators of Svelte and D3.js for providing the tools that made building this interactive article possible. Additionally, we acknowledge the contributions of the open-source community for their valuable libraries and resources.
 
 Thank you for exploring K-Means clustering with us! We hope you find our interactive article informative and engaging.
+
+# Contributers:
+
+Sai Kaushik Soma (A59020013)<br>
+Venkata Harsha Vardhan Gangala (A59019872)

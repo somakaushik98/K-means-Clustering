@@ -2,8 +2,8 @@
 
 # Contributers:
 
-Sai Kaushik Soma
-Venkata Harsha Vardhan Gangala
+Sai Kaushik Soma (A59020013)<\br>
+Venkata Harsha Vardhan Gangala (A59019872)
 
 # K-Means Clustering
 

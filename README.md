@@ -1,33 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K-Means Clustering Readme</title>
-</head>
-<body>
-    <h1>K-Means Clustering Readme</h1>
-    <p>Welcome to our interactive article on K-Means clustering! In this article, we explore the concept of K-Means clustering, a popular unsupervised machine learning algorithm used for clustering data points into groups based on similarities.</p>
+# K-Means Clustering Readme
 
-    <h2>What is K-Means Clustering?</h2>
-    <p>K-Means clustering is a partitioning algorithm that divides a dataset into 'K' distinct, non-overlapping clusters. The algorithm works iteratively to assign each data point to one of the 'K' clusters based on the features provided. It aims to minimize the variance within each cluster and maximize the variance between clusters.</p>
+Welcome to our interactive article on K-Means clustering! In this article, we explore the concept of K-Means clustering, a popular unsupervised machine learning algorithm used for clustering data points into groups based on similarities.
 
-    <h2>Interactive Visualization</h2>
-    <p>Our interactive article provides an engaging way to understand how K-Means clustering works. Using a combination of Svelte and D3.js, we've built an interactive visualization that allows users to:</p>
-    <ol>
-        <li><strong>Explore:</strong> Users can adjust parameters such as the number of clusters (K) to see how the algorithm partitions the data.</li>
-        <li><strong>Visualize:</strong> The visualization dynamically updates to show the centroids of each cluster and how the data points are assigned to clusters during each iteration of the algorithm.</li>
-        <li><strong>Understand:</strong> Users can gain a deeper understanding of K-Means clustering by observing how the algorithm converges to find the optimal clusters.</li>
-    </ol>
+## What is K-Means Clustering?
 
-    <h2>How to Use</h2>
-    <p>To explore our interactive article on K-Means clustering, simply visit the hosted website on GitHub Pages: <a href="https://somakaushik98.github.io/K-means-Clustering">Link to the interactive article</a>.</p>
-    <p>Once on the website, users can interact with the visualization to see the K-Means algorithm in action. They can adjust parameters and explore different datasets to gain insights into how the algorithm partitions the data.</p>
+K-Means clustering is a partitioning algorithm that divides a dataset into 'K' distinct, non-overlapping clusters. The algorithm works iteratively to assign each data point to one of the 'K' clusters based on the features provided. It aims to minimize the variance within each cluster and maximize the variance between clusters.
 
-    <h2>Acknowledgments</h2>
-    <p>We would like to thank the creators of Svelte and D3.js for providing the tools that made building this interactive article possible. Additionally, we acknowledge the contributions of the open-source community for their valuable libraries and resources.</p>
+## Interactive Visualization
 
-    
-    <p>Thank you for exploring K-Means clustering with us! We hope you find our interactive article informative and engaging.</p>
-</body>
-</html>
+Our interactive article provides an engaging way to understand how K-Means clustering works. Using a combination of Svelte and D3.js, we've built an interactive visualization that allows users to:
+
+1. **Explore**: Users can adjust parameters such as the number of clusters (K) to see how the algorithm partitions the data.
+2. **Visualize**: The visualization dynamically updates to show the centroids of each cluster and how the data points are assigned to clusters during each iteration of the algorithm.
+3. **Understand**: Users can gain a deeper understanding of K-Means clustering by observing how the algorithm converges to find the optimal clusters.
+
+## How to Use
+
+To explore our interactive article on K-Means clustering, simply visit the hosted website on GitHub Pages: [[Link to the interactive article](https://your-github-username.github.io/k-means-clustering)](https://somakaushik98.github.io/K-means-Clustering/).
+
+Once on the website, users can interact with the visualization to see the K-Means algorithm in action. They can adjust parameters and explore different datasets to gain insights into how the algorithm partitions the data.
+
+
+## Acknowledgments
+
+We would like to thank the creators of Svelte and D3.js for providing the tools that made building this interactive article possible. Additionally, we acknowledge the contributions of the open-source community for their valuable libraries and resources.
+
+Thank you for exploring K-Means clustering with us! We hope you find our interactive article informative and engaging.

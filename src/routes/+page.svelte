@@ -205,7 +205,7 @@
 	  
 	  x.domain(d3.extent(points, d => d.x)).nice();
       y.domain(d3.extent(points, d => d.y)).nice();
-
+  numClusters = numClusters;
   // Then update the axes -- make sure you have already appended groups with 'x-axis' and 'y-axis' class to your SVG
   svg.select(".x-axis").call(d3.axisBottom(x));
   svg.select(".y-axis").call(d3.axisLeft(y));
@@ -339,16 +339,16 @@
     <div id="tooltip" class="tooltip" style="opacity: 0"></div>
 	  <label for="numClusters">Number of Clusters:</label>
 	  <!-- <input id="numClusters" type="number" bind:value={numClusters} min="1" max="6" class="cluster-input" style="width: 300px;" on:focus={handleFocus} on:input={handleInput} on:click={handleInput} placeholder="Enter number of clusters...">-->
-    <select id="numClusters" bind:value={numClusters} class="cluster-input" style="width: 300px;" on:focus={handleFocus} on:input={handleInput} on:click={handleInput} placeholder="Enter number of clusters...">
-      <option value="" disabled selected>Please select number of clusters...</option>
+    <select id="numClusters" bind:value={numClusters} class="cluster-input" style="width: 300px;" on:focus={handleFocus} on:input={handleInput} on:click={handleInput}>
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
-      <option value="4">4</option>
+      <option value="4" selected>4</option>
       <option value="5">5</option>
       <option value="6">6</option>
     </select>    
     
+  
     {#if showInstructions} 
 <div class="instruction-box show">
   Reset the Cluster by clicking 'Reset' before clicking 'Start' after you change the value, and then click 'Start'
@@ -362,7 +362,9 @@
 {/if}
 	  <button on:click={reset}>Reset</button>
 	</div>
- 
+  <p class="note" style="font-size: 12px; color: black; margin-top: 10px;">
+    ** The default value for the number of clusters, "4", is selected. If you wish to change the number of clusters, please select a new value, click "Reset" and then click "Start"
+  </p>
 
     <div class="text-content">
     <div class="highlight-box">
@@ -709,5 +711,9 @@
   .instruction-box.show {
     display: block; /* Only show when .show is added */
   }
+
+
+
+
   </style>
   
